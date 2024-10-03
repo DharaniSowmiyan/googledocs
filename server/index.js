@@ -14,7 +14,7 @@ const server = http.createServer(app);  // Create HTTP server
 
 // CORS middleware for Express
 app.use(cors({
-    origin: ['*'],  // Allowed origins
+    origin: true,  // Allowed origins
     methods: ['GET', 'POST'],  // Allowed methods
     credentials: true,  // Allow credentials
     allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
@@ -24,7 +24,7 @@ app.use(cors({
 // Socket.io server with correct CORS configuration
 const io = new Server(server, {
     cors: {
-    origin: ['*'],  // Allowed origins
+    origin:true,  // Allowed origins
         methods: ['GET', 'POST'],  // Allowed methods
         credentials: true,  // Allow credentials
         allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
