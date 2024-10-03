@@ -24,7 +24,7 @@ app.use(cors({
 // Socket.io server with correct CORS configuration
 const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:3000', 'https://googledocs-pink.vercel.app'],  // Consistent origins
+    origin: ['*'],  // Allowed origins
         methods: ['GET', 'POST'],  // Allowed methods
         credentials: true,  // Allow credentials
         allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
