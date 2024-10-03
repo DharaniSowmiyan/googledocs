@@ -6,8 +6,7 @@ import {io} from 'socket.io-client';
 import {useParams} from 'react-router-dom';
 
 const Editor = () => {
-
-  const socket =io('http://localhost:9000');
+  const socket =io(`${process.env.NODE_ENV === "production"?"https://googledocs-pink.vercel.app/":"http://localhost:9000"}`);
   const[quill,setQuill]=useState();
   const {id} =useParams();
   /*useEffect(()=>{
