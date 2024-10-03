@@ -10,7 +10,6 @@ const http = require('http');
 const cors = require('cors');
 
 const app = express();
-const server = http.createServer(app);  // Create HTTP server
 
 // CORS middleware for Express
 app.use(cors({
@@ -21,6 +20,7 @@ app.use(cors({
     exposedHeaders: ['Authorization']  // Expose certain headers
 }));
 
+const server = http.createServer(app);  // Create HTTP server
 // Socket.io server with correct CORS configuration
 const io = new Server(server, {
     cors: {
