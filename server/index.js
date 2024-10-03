@@ -6,7 +6,9 @@ Connection();
 const io = new Server(PORT, {
     cors: {
         origin: ['http://localhost:3000','https://googledocs-a578.vercel.app/'],
-        methods: ['GET', 'POST']
+        methods: ['GET', 'POST'],
+        credentials: true
+        
     }
 });
 io.on('connection', socket => {
