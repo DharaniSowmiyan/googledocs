@@ -38,7 +38,7 @@ const Editor = () => {
     return () => {
       socket.off('connection', onConnect);
       socket.off('disconnect', onDisconnect);
-      socket.off('leaderboard', onGetLeaderboard);
+      // socket.off('leaderboard', onGetLeaderboard);
     };
   }, []);
   useEffect(() => {
