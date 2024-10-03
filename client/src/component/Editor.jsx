@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom';
 
 const Editor = () => {
 
-  const socket =io(`${process.env.NODE_ENV==="production"?"https://googledocs-a578.vercel.app/":"http://localhost:9000"}`);
+  const socket =io(`${process.env.NODE_ENV==="production"?"https://googledocs-a578.vercel.app/":"http://localhost:9000x"}`,{transports:["websocket"]});
   const[quill,setQuill]=useState();
   const {id} =useParams();
   /*useEffect(()=>{
