@@ -1,43 +1,63 @@
 import { Server } from 'socket.io';
 import Connection from './database/db.js';
-import { getDocument, updateDocument } from './controller/document-controller.js'
+import { getDocument, updateDocument } from './controller/document-controller.js';
+
 const PORT = 9000;
-Connection();
+Connection();  // Database connection
+
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
 const cors = require('cors');
 
 const app = express();
-const server = http.createServer(app);
+const server = http.createServer(app);  // Create HTTP server
 
+// CORS middleware for Express
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://googledocs-pink.vercel.app'], 
-    methods: ['GET', 'POST'],  
-    credentials: true,  
-    allowedHeaders: ['Content-Type', 'Authorization'], 
-    exposedHeaders: ['Authorization'] 
+    origin: ['http://localhost:3000', 'https://googledocs-pink.vercel.app'],  // Allowed origins
+    methods: ['GET', 'POST'],  // Allowed methods
+    credentials: true,  // Allow credentials
+    allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
+    exposedHeaders: ['Authorization']  // Expose certain headers
 }));
-const io = new Server(PORT, {
+
+// Socket.io server with correct CORS configuration
+const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:3000','https://googledocs-a578.vercel.app/'],
-        methods: ['GET', 'POST'],
-        credentials: true,
-        allowedHeaders: ['Content-Type', 'Authorization'], 
-        exposedHeaders: ['Authorization']
-        
+        origin: ['http://localhost:3000', 'https://googledocs-pink.vercel.app'],  // Consistent origins
+        methods: ['GET', 'POST'],  // Allowed methods
+        credentials: true,  // Allow credentials
+        allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
+        exposedHeaders: ['Authorization']  // Expose headers
     }
 });
+
+// Socket.io connection handling
 io.on('connection', socket => {
+    console.log('A user connected');
+
     socket.on('get-document', async documentId => {
         const document = await getDocument(documentId);
         socket.join(documentId);
         socket.emit('load-document', document.data);
+
+        // Broadcast changes to other users
         socket.on('send-changes', delta => {
             socket.broadcast.to(documentId).emit('receive-changes', delta);
-        })
+        });
+
+        // Save document data
         socket.on('save-document', async data => {
             await updateDocument(documentId, data);
-        })
-    })
+        });
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
+
+// Start the server
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
