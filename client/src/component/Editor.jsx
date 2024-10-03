@@ -9,6 +9,7 @@ const Editor = () => {
 
   const socket =io(`${process.env.NODE_ENV==="production"?"https://googledocs-a578.vercel.app/":"http://localhost:9000"}`,{transports:["websocket"]});
   const[quill,setQuill]=useState();
+  const [isConnected,setIsConnected] = useState(false);
   const {id} =useParams();
   /*useEffect(()=>{
     socket.emit("hello",{message:"hello",name:"dharani"})
@@ -19,6 +20,27 @@ const Editor = () => {
       console.log(data);
     })
   },[socket])*/
+  useEffect(() => {
+    function onConnect() {
+      setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+
+  
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    // socket.on('leaderboard', onGetLeaderboard);
+    // socket.emit("requestLeaderboard");
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('leaderboard', onGetLeaderboard);
+    };
+  }, []);
   useEffect(() => {
     
     const existingToolbar = document.querySelector('.ql-toolbar');
