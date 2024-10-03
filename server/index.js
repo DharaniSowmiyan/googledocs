@@ -14,7 +14,7 @@ const server = http.createServer(app);  // Create HTTP server
 
 // CORS middleware for Express
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://googledocs-pink.vercel.app'],  // Allowed origins
+    origin: ['*'],  // Allowed origins
     methods: ['GET', 'POST'],  // Allowed methods
     credentials: true,  // Allow credentials
     allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
