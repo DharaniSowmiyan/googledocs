@@ -1,6 +1,6 @@
-import Document from '../schema/documentSchema.js';
-
-export const getDocument = async (id) => {
+// import Document from '../schema/documentSchema.js';
+const Document = require("../schema/documentSchema.js")
+ const getDocument = async (id) => {
     if (!id) return;
 
     let document = await Document.findById(id);
@@ -23,7 +23,7 @@ export const getDocument = async (id) => {
         }
     }
 };
-export const updateDocument = async (id, data) => {
+const updateDocument = async (id, data) => {
     if (!id) return;
 
     const updatedDocument = await Document.findByIdAndUpdate(id, { data }, { new: true });
@@ -34,3 +34,5 @@ export const updateDocument = async (id, data) => {
 
     return updatedDocument;
 };
+
+module.exports={getDocument,updateDocument}

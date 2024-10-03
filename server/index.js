@@ -1,7 +1,10 @@
-import { Server } from 'socket.io';
-import Connection from './database/db.js';
-import { getDocument, updateDocument } from './controller/document-controller.js';
+// import { Server } from 'socket.io';
+// import Connection from './database/db.js';
+// import { getDocument, updateDocument } from './controller/document-controller.js';
 
+const {Server} = require('socket.io');
+const Connection = require("./database/db.js")
+const {getDocument,updateDocument} = require("./controller/document-controller.js")
 const PORT = 9000;
 Connection();  // Database connection
 

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-
+// import mongoose from 'mongoose';
+const mongoose = require("mongoose");
 const documentSchema = mongoose.Schema({
     _id: {
         type: String,
@@ -13,4 +13,4 @@ const documentSchema = mongoose.Schema({
 
 const document = mongoose.model('document', documentSchema);
 
-export default document;
+module.exports = document;
