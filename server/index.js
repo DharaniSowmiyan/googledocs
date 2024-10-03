@@ -7,7 +7,9 @@ const io = new Server(PORT, {
     cors: {
         origin: ['http://localhost:3000','https://googledocs-a578.vercel.app/'],
         methods: ['GET', 'POST'],
-        credentials: true
+        credentials: true,
+        allowedHeaders: ['Content-Type', 'Authorization'], // Add required headers
+        exposedHeaders: ['Authorization']
         
     }
 });
