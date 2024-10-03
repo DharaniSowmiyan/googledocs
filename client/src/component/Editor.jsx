@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom';
 
 const Editor = () => {
 
-  const socket =io(`${process.env.NODE_ENV==="production"?"https://googledocs-a578.vercel.app/":"http://localhost:9000"}`,{transports:["websocket"],path:"/"});
+  const socket =io(`${process.env.NODE_ENV==="production"?"https://googledocs-a578.vercel.app/namespace":"http://localhost:9000"}`,{transports:["websocket"],path:"/"});
   const[quill,setQuill]=useState();
   const [isConnected,setIsConnected] = useState(false);
   const {id} =useParams();
