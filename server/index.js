@@ -29,11 +29,12 @@ const io = new Server(server, {
         credentials: true,  // Allow credentials
         allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
         exposedHeaders: ['Authorization']  // Expose headers
-    }
+    },
+    path: '/'
 });
 
 // Socket.io connection handling
-io.on('connection', socket => {
+io.of("/namespace").on('connection', socket => {
     console.log('A user connected');
 
     socket.on('get-document', async documentId => {
